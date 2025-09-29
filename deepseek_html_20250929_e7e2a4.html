@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Памяти [Имя Фамилия] | 19XX-2024</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f8f8;
+            background-image: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9));
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+        }
+
+        .main-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #f0f0f0;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: normal;
+        }
+
+        .dates {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .epitaph {
+            font-style: italic;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .nav-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #495057;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section {
+            display: none;
+            padding: 30px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        .memory-form {
+            margin-top: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #34495e;
+        }
+
+        .memory {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2c3e50;
+        }
+
+        .memory-author {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .memory-date {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .flower-btn {
+            background: #27ae60;
+            margin: 10px;
+        }
+
+        .flower-btn:hover {
+            background: #219a52;
+        }
+
+        .candle {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+
+        .flowers-count, .candles-count {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .biography-text {
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .back-btn {
+            background: #95a5a6;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .main-photo {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Главный экран -->
+        <div class="header">
+            <img src="https://via.placeholder.com/200x200?text=Фото" alt="Фото [Имя Фамилия]" class="main-photo" id="mainPhoto">
+            <h1 id="personName">Имя Фамилия</h1>
+            <div class="dates" id="personDates">19XX - 2024</div>
+            <div class="epitaph" id="epitaphText">Краткая проникновенная эпитафия, которая отражает суть человека...</div>
+            
+            <div class="nav-grid">
+                <div class="nav-item" onclick="showSection('biography')">
+                    <span class="nav-icon">📖</span>
+                    История жизни
+                </div>
+                <div class="nav-item" onclick="showSection('gallery')">
+                    <span class="nav-icon">🖼️</span>
+                    Фотогалерея
+                </div>
+                <div class="nav-item" onclick="showSection('memories')">
+                    <span class="nav-icon">💭</span>
+                    Воспоминания
+                </div>
+                <div class="nav-item" onclick="showSection('tribute')">
+                    <span class="nav-icon">🌸</span>
+                    Почтить память
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел Биография -->
+        <div id="biography" class="section">
+            <button class="back-btn" onclick="showMain()">← Назад</button>
+            <h2>История жизни</h2>
+            <div class="biography-text" id="biographyText">
+                <!-- Текст биографии будет загружен из JavaScript -->
+            </div>
+        </div>
+
+        <!-- Раздел Галерея -->
+        <div id="gallery" class="section">
+            <button class="back-btn" onclick="showMain()">← Назад</button>
+            <h2>Фотогалерея</h2>
+            <div class="gallery" id="photoGallery">
+                <!-- Фотографии будут загружены из JavaScript -->
+            </div>
+        </div>
+
+        <!-- Раздел Воспоминания -->
+        <div id="memories" class="section">
+            <button class="back-btn" onclick="showMain()">← Назад</button>
+            <h2>Воспоминания</h2>
+            <div id="memoriesList">
+                <!-- Воспоминания будут загружены из JavaScript -->
+            </div>
+            
+            <div class="memory-form">
+                <h3>Оставить воспоминание</h3>
+                <textarea id="memoryText" placeholder="Поделитесь вашим воспоминанием..."></textarea>
+                <input type="text" id="memoryAuthor" placeholder="Ваше имя" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px;">
+                <button onclick="addMemory()">Добавить воспоминание</button>
+            </div>
+        </div>
+
+        <!-- Раздел Почтить память -->
+        <div id="tribute" class="section">
+            <button class="back-btn" onclick="showMain()">← Назад</button>
+            <h2>Почтить память</h2>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <div class="candle" onclick="lightCandle()">🕯️</div>
+                <div class="candles-count" id="candlesCount">Зажжено свечей: 0</div>
+                
+                <button class="flower-btn" onclick="leaveFlower()">🌸 Оставить цветок</button>
+                <div class="flowers-count" id="flowersCount">Цветов оставлено: 0</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные страницы (замените на реальные данные)
+        const pageData = {
+            name: "Елена Петрова",
+            dates: "1965 - 2024",
+            epitaph: "Любимая мама, жена и друг. Твоя улыбка навсегда останется в наших сердцах.",
+            mainPhoto: "https://via.placeholder.com/200x200?text=Фото",
+            
+            biography: `Елена Петрова родилась 15 марта 1965 года в Москве. С детства проявляла интерес к музыке и литературе, окончила музыкальную школу по классу фортепиано.
+
+В 1987 году окончила Московский государственный университет по специальности "Филология". Более 30 лет проработала учителем литературы в школе №125, где ее любили и уважали коллеги и ученики.
+
+В 1990 году вышла замуж за Александра Петрова. В 1992 году у них родилась дочь Мария. Елена была прекрасной матерью и верной женой, всегда поддерживала свою семью в трудные моменты.
+
+Елена увлекалась садоводством, классической музыкой и путешествиями. Особенно любила поездки в Крым, где проводила каждое лето с семьей.
+
+Ее жизненное кредо: "Делай добро и оно к тебе вернется". Елена навсегда останется в наших сердцах как светлый и добрый человек.`,
+            
+            gallery: [
+                "https://via.placeholder.com/300x200?text=Фото+1",
+                "https://via.placeholder.com/300x200?text=Фото+2", 
+                "https://via.placeholder.com/300x200?text=Фото+3",
+                "https://via.placeholder.com/300x200?text=Фото+4",
+                "https://via.placeholder.com/300x200?text=Фото+5",
+                "https://via.placeholder.com/300x200?text=Фото+6"
+            ],
+            
+            memories: [
+                {author: "Мария", text: "Мама, ты была самым светлым человеком в моей жизни. Я всегда буду помнить твою мудрость и поддержку.", date: "2024-01-15"},
+                {author: "Александр", text: "Лена, моя любимая жена. 34 года счастья, которые ты мне подарила, останутся со мной навсегда.", date: "2024-01-14"},
+                {author: "Коллеги из школы", text: "Елена Ивановна была прекрасным педагогом и замечательным человеком. Мы всегда будем помнить ее мудрые советы.", date: "2024-01-13"}
+            ]
+        };
+
+        // Инициализация страницы
+        function initializePage() {
+            document.getElementById('personName').textContent = pageData.name;
+            document.getElementById('personDates').textContent = pageData.dates;
+            document.getElementById('epitaphText').textContent = pageData.epitaph;
+            document.getElementById('mainPhoto').src = pageData.mainPhoto;
+            document.getElementById('biographyText').innerHTML = pageData.biography.replace(/\n/g, '<br><br>');
+            
+            // Загрузка галереи
+            const gallery = document.getElementById('photoGallery');
+            pageData.gallery.forEach(photo => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.alt = "Фото памяти";
+                img.onclick = () => window.open(photo, '_blank');
+                gallery.appendChild(img);
+            });
+            
+            // Загрузка воспоминаний
+            loadMemories();
+            
+            // Загрузка счетчиков из localStorage
+            updateCounters();
+        }
+
+        // Навигация по разделам
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        function showMain() {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+        }
+
+        // Работа с воспоминаниями
+        function loadMemories() {
+            const memoriesList = document.getElementById('memoriesList');
+            const memories = JSON.parse(localStorage.getItem('memories')) || pageData.memories;
+            
+            memoriesList.innerHTML = '';
+            memories.forEach(memory => {
+                const memoryDiv = document.createElement('div');
+                memoryDiv.className = 'memory';
+                memoryDiv.innerHTML = `
+                    <div class="memory-author">${memory.author}</div>
+                    <div class="memory-text">${memory.text}</div>
+                    <div class="memory-date">${new Date(memory.date).toLocaleDateString('ru-RU')}</div>
+                `;
+                memoriesList.appendChild(memoryDiv);
+            });
+        }
+
+        function addMemory() {
+            const text = document.getElementById('memoryText').value;
+            const author = document.getElementById('memoryAuthor').value || 'Аноним';
+            
+            if (!text.trim()) {
+                alert('Пожалуйста, напишите воспоминание');
+                return;
+            }
+            
+            const memories = JSON.parse(localStorage.getItem('memories')) || pageData.memories;
+            const newMemory = {
+                author: author,
+                text: text,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            memories.unshift(newMemory);
+            localStorage.setItem('memories', JSON.stringify(memories));
+            
+            document.getElementById('memoryText').value = '';
+            document.getElementById('memoryAuthor').value = '';
+            loadMemories();
+            
+            alert('Спасибо за ваше воспоминание!');
+        }
+
+        // Виртуальные цветы и свечи
+        function leaveFlower() {
+            let count = parseInt(localStorage.getItem('flowersCount') || '0');
+            count++;
+            localStorage.setItem('flowersCount', count.toString());
+            updateCounters();
+        }
+
+        function lightCandle() {
+            let count = parseInt(localStorage.getItem('candlesCount') || '0');
+            count++;
+            localStorage.setItem('candlesCount', count.toString());
+            updateCounters();
+        }
+
+        function updateCounters() {
+            const flowersCount = localStorage.getItem('flowersCount') || '0';
+            const candlesCount = localStorage.getItem('candlesCount') || '0';
+            
+            document.getElementById('flowersCount').textContent = `Цветов оставлено: ${flowersCount}`;
+            document.getElementById('candlesCount').textContent = `Зажжено свечей: ${candlesCount}`;
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
