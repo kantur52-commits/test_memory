@@ -208,6 +208,10 @@
             margin-bottom: 20px;
         }
 
+        .back-btn:hover {
+            background: #7f8c8d;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -377,16 +381,26 @@
 
         // Навигация по разделам
         function showSection(sectionId) {
+            // Скрываем все разделы
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
+            
+            // Показываем выбранный раздел
             document.getElementById(sectionId).classList.add('active');
+            
+            // Мгновенно перескакиваем к началу выбранного раздела
+            document.getElementById(sectionId).scrollIntoView();
         }
 
         function showMain() {
+            // Скрываем все разделы
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
+            
+            // Перескакиваем к началу страницы
+            window.scrollTo(0, 0);
         }
 
         // Работа с воспоминаниями
